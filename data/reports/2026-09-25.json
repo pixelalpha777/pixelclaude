@@ -1,0 +1,33 @@
+{
+  "date": "2026-09-25",
+  "forDay": "試運転・発注なし",
+  "decision": "見送り",
+  "market": "【試運転】25日の日経平均は66,364円（+1.30%）で、半導体・銀行・配当取りが相場を支えた。ドル円は158円台、日銀・FRBとも9月に利上げ。28日(月)は9月末の権利付き最終売買日、29日は権利落ち日。",
+  "picks": [
+    {
+      "action": "候補",
+      "code": "7267",
+      "name": "本田技研工業",
+      "order": "試運転のため発注しません。9/27(日)夜の再検討結果で最終決定します。",
+      "reason": "Solの材料は円安水準（確信度2）。チャートは候補10銘柄で最も強く、価格>25日線>75日線の上昇トレンド、25日線上向き、RSI 59で過熱なし。52週高値1,766.5円が目先の壁。",
+      "refPrice": 1735.5,
+      "shares": 4,
+      "stop": 1655,
+      "target": 1857
+    }
+  ],
+  "comment": "試運転の暫定判断。日曜夜にSolの最新調査と金曜終値で再検討し、月曜寄付向けの最終推奨を出します。有力候補はホンダ、押し目待ちは三菱UFJ。",
+  "holdingsCheck": [],
+  "candidates": [
+    {"chosen": true,  "code": "7267", "conviction": 2, "name": "本田技研工業", "note": "上昇トレンド・25日線上向き・RSI 59", "price": 1735.5, "score": 5},
+    {"chosen": false, "code": "9432", "conviction": 2, "name": "NTT", "note": "上昇トレンドだが値幅が小さい", "price": 176.1, "score": 4},
+    {"chosen": false, "code": "7011", "conviction": 3, "name": "三菱重工業", "note": "5日で+5.3%反発、25日線はまだ下向き", "price": 3897, "score": 3},
+    {"chosen": false, "code": "8306", "conviction": 4, "name": "三菱UFJ FG", "note": "材料は最強だが当日急騰で高値圏、押し目待ち", "price": 3714, "score": 2},
+    {"chosen": false, "code": "9434", "conviction": 3, "name": "ソフトバンク", "note": "MACDデッドクロス", "price": 245.9, "score": 2},
+    {"chosen": false, "code": "8604", "conviction": 3, "name": "野村HD", "note": "25日線割れ", "price": 1586, "score": 2},
+    {"chosen": false, "code": "5020", "conviction": 2, "name": "ENEOS HD", "note": "MACDデッドクロス", "price": 1436, "score": 2},
+    {"chosen": false, "code": "7013", "conviction": 2, "name": "IHI", "note": "25日線下向き", "price": 2797, "score": 1},
+    {"chosen": false, "code": "7203", "conviction": 3, "name": "トヨタ自動車", "note": "25日線下向き・下落基調", "price": 2989.5, "score": 0},
+    {"chosen": false, "code": "6758", "conviction": 2, "name": "ソニーG", "note": "25日線下向き・下落基調", "price": 3710, "score": 0}
+  ]
+}

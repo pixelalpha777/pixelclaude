@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>かぶミニ作戦ノート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --paper:#f3f5f2; --card:#ffffff; --ink:#1b2430; --sub:#5b6673; --line:#dde2dc;
+  --accent:#1f5f6b; --accent-soft:#e2eeef;
+  --up:#c23a2f; --up-soft:#fbe9e6; --down:#2f6fb0; --down-soft:#e5eef8; --wait:#8a6d1c; --wait-soft:#f6efd9;
+  --font:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  color-scheme:dark;--paper:#12171d;--card:#1a2129;--ink:#e6ebef;--sub:#9aa6b2;--line:#2b343e;
+  --accent:#6fb6c2;--accent-soft:#1d3238;--up:#ff7a6b;--up-soft:#3a1f1c;--down:#7fb2ea;--down-soft:#1b2a3b;--wait:#e0c26a;--wait-soft:#332b17;}}
+:root[data-theme="dark"]{
+  color-scheme:dark;--paper:#12171d;--card:#1a2129;--ink:#e6ebef;--sub:#9aa6b2;--line:#2b343e;
+  --accent:#6fb6c2;--accent-soft:#1d3238;--up:#ff7a6b;--up-soft:#3a1f1c;--down:#7fb2ea;--down-soft:#1b2a3b;--wait:#e0c26a;--wait-soft:#332b17;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.7}
+.wrap{max-width:760px;margin:0 auto;padding-inline:16px;padding-block:20px 48px;display:flex;flex-direction:column;gap:22px}
+header{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
+h1{font-size:22px;margin:0;letter-spacing:.02em;text-wrap:balance}
+.sub{color:var(--sub);font-size:13px}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+h2{font-size:13px;letter-spacing:.12em;color:var(--sub);margin:0 0 8px;font-weight:500}
+section{display:flex;flex-direction:column}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px}
+.budget{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.budget div{display:flex;flex-direction:column}
+.budget b{font-family:var(--mono);font-size:19px;font-weight:500}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-top:10px}
+.bar i{display:block;height:100%;background:var(--accent)}
+.verdict{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.pill{display:inline-block;padding:2px 10px;border-radius:99px;font-size:13px;font-weight:700}
+.p-buy{background:var(--up-soft);color:var(--up)} .p-sell{background:var(--down-soft);color:var(--down)} .p-wait{background:var(--wait-soft);color:var(--wait)} .p-hold{background:var(--accent-soft);color:var(--accent)}
+.pick{border-top:1px solid var(--line);padding-top:12px;margin-top:12px;display:flex;flex-direction:column;gap:6px}
+.pick-head{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.pick-head strong{font-size:17px}
+.kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:6px 14px;font-size:13px}
+.kv span{color:var(--sub);display:block;font-size:11px;letter-spacing:.06em}
+.order{background:var(--accent-soft);border-radius:8px;padding:10px 12px;font-size:14px}
+.muted{color:var(--sub);font-size:13px}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13px;min-width:520px}
+th,td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{color:var(--sub);font-weight:500;font-size:12px}
+td.r,th.r{text-align:right}
+.chosen td{background:var(--accent-soft)}
+form{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;align-items:end}
+label{display:flex;flex-direction:column;font-size:12px;color:var(--sub);gap:3px}
+input{font:inherit;font-size:14px;padding:7px 9px;border:1px solid var(--line);border-radius:6px;background:var(--paper);color:var(--ink);min-width:0}
+button{font:inherit;font-size:14px;padding:7px 14px;border-radius:6px;border:1px solid var(--accent);background:var(--accent);color:var(--card);cursor:pointer}
+button.ghost{background:transparent;color:var(--accent)}
+button:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.hold{display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--line);padding-top:10px;margin-top:10px}
+.hold:first-child{border-top:0;margin-top:0;padding-top:0}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.gain{font-family:var(--mono)} .gain.pos{color:var(--up)} .gain.neg{color:var(--down)}
+details summary{cursor:pointer;color:var(--accent);font-size:14px}
+.note{font-size:12px;color:var(--sub);line-height:1.6}
+.err{color:var(--up);font-size:13px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div>
+      <h1>かぶミニ作戦ノート</h1>
+      <div class="sub">Sol（調査）→ Opus（チャート・最終判断）→ あなたが発注　／　楽天証券 NISA成長投資枠</div>
+    </div>
+    <div class="sub num" id="updated"></div>
+  </header>
+
+  <section>
+    <h2>資金</h2>
+    <div class="panel">
+      <div class="budget">
+        <div><span class="muted">予算</span><b id="b-total">27,000</b></div>
+        <div><span class="muted">保有中（取得額）</span><b id="b-used">0</b></div>
+        <div><span class="muted">使える残り</span><b id="b-left">27,000</b></div>
+      </div>
+      <div class="bar"><i id="b-bar" style="width:0%"></i></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>最新の報告</h2>
+    <div class="panel" id="latest"><p class="muted">まだ報告はありません。日曜〜木曜の22時台に届きます。</p></div>
+  </section>
+
+  <section>
+    <h2>保有銘柄</h2>
+    <div class="panel">
+      <div id="holdings"><p class="muted">保有銘柄はありません。</p></div>
+      <details style="margin-top:14px">
+        <summary>買った銘柄を記録する</summary>
+        <form id="buy-form" style="margin-top:10px">
+          <label>証券コード<input id="f-code" inputmode="numeric" maxlength="5" required></label>
+          <label>銘柄名<input id="f-name" required></label>
+          <label>株数<input id="f-shares" type="number" min="1" value="1" required></label>
+          <label>約定単価（円）<input id="f-price" type="number" step="0.1" min="0" required></label>
+          <label>約定日<input id="f-date" type="date" required></label>
+          <button type="submit">記録する</button>
+        </form>
+        <p class="err" id="buy-err" hidden></p>
+      </details>
+    </div>
+    <p class="note">ここに記録した保有銘柄は、毎晩の分析で「売るか・持ち続けるか」の判断に使われます。売ったら「売却を記録」を押してください。</p>
+  </section>
+
+  <section>
+    <h2>過去の報告</h2>
+    <div class="panel" id="history"><p class="muted">まだありません。</p></div>
+  </section>
+
+  <p class="note">この報告はAIによる参考情報で、投資助言ではありません。売買の判断と結果はご自身の責任でお願いします。NISA成長投資枠は売却しても枠が戻るのは翌年です。</p>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const yen=n=>n==null||isNaN(n)?"—":Math.round(n).toLocaleString("ja-JP");
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const actionPill=a=>{const m={"買い":"p-buy","売り":"p-sell","見送り":"p-wait","保有継続":"p-hold"};return `<span class="pill ${m[a]||"p-hold"}">${esc(a||"—")}</span>`};
+let db=null, reports=[], holdings=[], budget=27000;
+try{$("f-date").value=new Date().toISOString().slice(0,10)}catch(e){}
+
+function renderBudget(){
+  const used=holdings.filter(h=>h.status==="open").reduce((s,h)=>s+(h.price||0)*(h.shares||0),0);
+  $("b-total").textContent=yen(budget);$("b-used").textContent=yen(used);$("b-left").textContent=yen(budget-used);
+  $("b-bar").style.width=Math.min(100,used/budget*100)+"%";
+}
+function pickHTML(p){
+  return `<div class="pick">
+    <div class="pick-head">${actionPill(p.action)}<strong>${esc(p.name)}</strong><span class="num muted">${esc(p.code)}</span></div>
+    ${p.order?`<div class="order">${esc(p.order)}</div>`:""}
+    <div class="kv">
+      <div><span>株数</span><b class="num">${p.shares??"—"}</b></div>
+      <div><span>参考株価</span><b class="num">${yen(p.refPrice)}</b></div>
+      <div><span>損切りライン</span><b class="num">${yen(p.stop)}</b></div>
+      <div><span>利確目標</span><b class="num">${yen(p.target)}</b></div>
+    </div>
+    ${p.reason?`<div style="font-size:14px">${esc(p.reason)}</div>`:""}
+  </div>`;
+}
+function candTable(c){
+  if(!c||!c.length)return "";
+  return `<details style="margin-top:14px"><summary>Solの候補とチャート採点（${c.length}銘柄）</summary><div class="tbl" style="margin-top:8px"><table>
+  <thead><tr><th>コード</th><th>銘柄</th><th class="r">株価</th><th class="r">Sol確信度</th><th class="r">チャート点</th><th>メモ</th></tr></thead><tbody>
+  ${c.map(x=>`<tr class="${x.chosen?"chosen":""}"><td class="num">${esc(x.code)}</td><td>${esc(x.name)}</td><td class="r num">${yen(x.price)}</td><td class="r num">${x.conviction??"—"}</td><td class="r num">${x.score??"—"}</td><td>${esc(x.note)}</td></tr>`).join("")}
+  </tbody></table></div></details>`;
+}
+function renderReports(){
+  if(!reports.length)return;
+  const r=reports[0];
+  $("updated").textContent="最終報告 "+r.date;
+  $("latest").innerHTML=`
+    <div class="verdict">${actionPill(r.decision)}<span class="num muted">${esc(r.date)}（${esc(r.forDay||"")}の寄付向け）</span></div>
+    ${r.market?`<p style="margin:10px 0 0">${esc(r.market)}</p>`:""}
+    ${(r.picks||[]).map(pickHTML).join("")}
+    ${r.comment?`<p class="muted" style="margin:12px 0 0">Opus: ${esc(r.comment)}</p>`:""}
+    ${candTable(r.candidates)}`;
+  const past=reports.slice(1,30);
+  $("history").innerHTML=past.length?`<div class="tbl"><table><thead><tr><th>日付</th><th>判断</th><th>内容</th></tr></thead><tbody>${
+    past.map(p=>`<tr><td class="num">${esc(p.date)}</td><td>${actionPill(p.decision)}</td><td>${esc((p.picks||[]).map(x=>`${x.action} ${x.name}(${x.code})`).join(" / ")||p.comment||"")}</td></tr>`).join("")
+  }</tbody></table></div>`:`<p class="muted">まだありません。</p>`;
+}
+function renderHoldings(){
+  const open=holdings.filter(h=>h.status==="open"), closed=holdings.filter(h=>h.status==="closed").slice(0,10);
+  const latestPx={};(reports[0]?.holdingsCheck||[]).forEach(x=>latestPx[x.code]=x);
+  let html=open.length?open.map(h=>{
+    const chk=latestPx[h.code];const px=chk?.price;const g=px?(px-h.price)*h.shares:null;
+    return `<div class="hold" data-id="${esc(h.id)}">
+      <div class="pick-head"><strong>${esc(h.name)}</strong><span class="num muted">${esc(h.code)}</span>${chk?actionPill(chk.action):""}</div>
+      <div class="kv">
+        <div><span>株数</span><b class="num">${h.shares}</b></div>
+        <div><span>取得単価</span><b class="num">${yen(h.price)}</b></div>
+        <div><span>直近終値</span><b class="num">${yen(px)}</b></div>
+        <div><span>評価損益</span><b class="gain ${g>0?"pos":g<0?"neg":""}">${g==null?"—":(g>0?"+":"")+yen(g)}</b></div>
+        <div><span>損切り / 目標</span><b class="num">${yen(chk?.stop??h.stop)} / ${yen(chk?.target??h.target)}</b></div>
+        <div><span>取得日</span><b class="num">${esc(h.date)}</b></div>
+      </div>
+      <div class="row"><input id="sell-${esc(h.id)}" type="number" step="0.1" placeholder="売却単価（円）" style="max-width:170px"><button class="ghost" data-sell="${esc(h.id)}">売却を記録</button></div>
+    </div>`}).join(""):`<p class="muted">保有銘柄はありません。</p>`;
+  if(closed.length)html+=`<details style="margin-top:12px"><summary>売却済み（直近${closed.length}件）</summary><div class="tbl"><table><thead><tr><th>銘柄</th><th class="r">株数</th><th class="r">取得</th><th class="r">売却</th><th class="r">損益</th></tr></thead><tbody>${
+    closed.map(h=>{const g=(h.sellPrice-h.price)*h.shares;return `<tr><td>${esc(h.name)} <span class="num muted">${esc(h.code)}</span></td><td class="r num">${h.shares}</td><td class="r num">${yen(h.price)}</td><td class="r num">${yen(h.sellPrice)}</td><td class="r gain ${g>0?"pos":g<0?"neg":""}">${(g>0?"+":"")+yen(g)}</td></tr>`}).join("")}</tbody></table></div></details>`;
+  $("holdings").innerHTML=html;
+  renderBudget();
+}
+$("holdings").addEventListener("click",async e=>{
+  const id=e.target.dataset?.sell;if(!id||!db)return;
+  const v=parseFloat($("sell-"+id).value);if(!(v>0)){$("sell-"+id).focus();return}
+  e.target.disabled=true;
+  try{await db.doc("holdings/"+id).update({status:"closed",sellPrice:v,sellDate:new Date().toISOString().slice(0,10)})}
+  catch(err){e.target.disabled=false;alertErr("売却を記録できませんでした。もう一度お試しください。")}
+});
+function alertErr(m){$("buy-err").textContent=m;$("buy-err").hidden=false}
+$("buy-form").addEventListener("submit",async e=>{
+  e.preventDefault();if(!db){alertErr("記録機能を読み込めていません。ページを開き直してください。");return}
+  const code=$("f-code").value.trim(),id=code+"-"+Date.now().toString(36);
+  const body={id,code,name:$("f-name").value.trim(),shares:+$("f-shares").value,price:+$("f-price").value,date:$("f-date").value,status:"open"};
+  const pick=(reports[0]?.picks||[]).find(p=>p.code===code);if(pick){body.stop=pick.stop??null;body.target=pick.target??null}
+  try{await db.doc("holdings/"+id).set(body);$("buy-form").reset();$("f-shares").value=1;$("buy-err").hidden=true;try{$("f-date").value=new Date().toISOString().slice(0,10)}catch(_){}}
+  catch(err){alertErr("記録できませんでした。もう一度お試しください。")}
+});
+$("f-code").addEventListener("input",()=>{const c=$("f-code").value.trim();const p=(reports[0]?.picks||[]).find(x=>x.code===c);if(p&&!$("f-name").value){$("f-name").value=p.name;if(p.refPrice)$("f-price").value=p.refPrice}});
+
+(async()=>{
+  db=await claude.use("db");
+  if(!db){$("latest").innerHTML=`<p class="muted">データを読み込めませんでした。claude.ai にサインインした状態で開いてください。</p>`;return}
+  db.doc("settings/main").onSnapshot(s=>{if(s.exists&&s.data().budget){budget=s.data().budget;renderBudget()}});
+  db.collection("reports").orderBy("date","desc").limit(40).onSnapshot(s=>{reports=s.docs.map(d=>d.data());renderReports();renderHoldings()});
+  db.collection("holdings").orderBy("date","desc").onSnapshot(s=>{holdings=s.docs.map(d=>d.data());renderHoldings()});
+})();
+</script>
+
+</body>
+</html>
